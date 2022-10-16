@@ -12,6 +12,8 @@ conda activate dali
 make setup
 ```
 
+And your machine must have GPU that support cuda 11.0.
+
 ## How to run
 ```
 python getting_start.py
