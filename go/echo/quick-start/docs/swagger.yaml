@@ -1,0 +1,49 @@
+info:
+  contact:
+    email: dev@annotation-ai.com
+    name: Annotation-AI
+paths:
+  /users:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Save user
+      parameters:
+      - description: name
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: email
+        in: formData
+        name: email
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'name: {name}, email: {email}'
+          schema:
+            type: string
+      summary: Save user
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get user
+      parameters:
+      - description: name of the user
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: user id
+          schema:
+            type: string
+      summary: Get user
+swagger: "2.0"
