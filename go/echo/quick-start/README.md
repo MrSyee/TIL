@@ -47,6 +47,10 @@ curl -d "name=Joe Smith" -d "email=joe@labstack.com" http://localhost:1323/users
 name:Joe Smith, email:joe@labstack.com%
 ```
 
+### Swagger
+Connect `http://localhost:1323/docs/` in your browser.
+<img width="1453" alt="image" src="https://user-images.githubusercontent.com/17582508/204183330-e1e283bc-a4d3-4772-9eb2-49df7b7b89f4.png">
+
 ## Reference
 - [Guide](https://echo.labstack.com/guide/)
 - [Echo-Swagger](https://github.com/swaggo/echo-swagger)
