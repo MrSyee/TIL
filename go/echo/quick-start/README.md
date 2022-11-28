@@ -15,6 +15,7 @@ go install github.com/swaggo/swag/cmd/swag@latest # swagger cli
 
 ## Run
 ```bash
+swag init
 go run main.go
 ```
 ```bash
