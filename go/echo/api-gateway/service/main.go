@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"service/controller"
+
+	_ "service/docs"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -13,12 +16,14 @@ import (
 
 // Flags contains the information to send requests to Triton inference server.
 type Flags struct {
-	PORT string
+	PORT   string
+	SumURL string
 }
 
 func parseFlags() Flags {
 	var flags = Flags{}
 	flag.StringVar(&flags.PORT, "p", "10000", "Service Port. Default: 10000")
+	flag.StringVar(&flags.SumURL, "u", "http://localhost:20000/sum", "Target URL")
 	return flags
 }
 
@@ -31,12 +36,17 @@ func main() {
 
 	// Create a server with echo.
 	e := echo.New()
+	cont := controller.NewController()
 
 	// Logger
 	e.Use(middleware.Logger())
 
 	// APIs
-	e.GET("/", getHealthCheck())
+	e.GET("/", getHealthCheck)
+	e.POST("/sum", func(c echo.Context) error {
+		return cont.Sum(c, flags.SumURL)
+	},
+	)
 
 	// Swagger
 	e.GET("/docs/*", echoSwagger.WrapHandler)

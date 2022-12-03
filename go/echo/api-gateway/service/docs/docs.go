@@ -38,6 +38,42 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/sum": {
+            "post": {
+                "description": "It outputs sum of two inputs",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Sum integer inputs",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "inputX",
+                        "name": "inputX",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "inputY",
+                        "name": "inputY",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Integer response: int",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
         }
     }
 }`

@@ -14,3 +14,10 @@ setup-dev:
 format:
 	golines -m 100 -t 4 -w *.go
 	swag fmt
+
+.PHONY: docs
+docs:
+	swag init
+
+lint:
+	golangci-lint run

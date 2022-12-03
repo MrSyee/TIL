@@ -34,11 +34,12 @@ func Sum(c echo.Context) error {
 		log.Error(err.Error())
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
 	}
+	log.Info("Inputs ", *inputs)
 
 	// Business logic
 	response := IntegerOutput{Sum: (inputs.InputX + inputs.InputY)}
 	log.Info("Run Sum logic ", response)
-	return c.JSON(http.StatusOK, response)
+	return fmt.Errorf("%w", c.JSON(http.StatusOK, response))
 }
 
 // func Multiply(x int, y int) error {
