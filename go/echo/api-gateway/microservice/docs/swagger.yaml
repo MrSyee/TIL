@@ -1,0 +1,43 @@
+info:
+  contact:
+    email: khsyee@gmail.com
+    name: Kyunghwan Kim
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: It returns true if the api server is alive.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API server's liveness
+          schema:
+            type: boolean
+      summary: Healthcheck
+  /sum:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: It outputs sum of two inputs
+      parameters:
+      - description: inputX
+        in: formData
+        name: inputX
+        required: true
+        type: integer
+      - description: inputY
+        in: formData
+        name: inputY
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'Integer response: int'
+          schema:
+            type: integer
+      summary: Sum integer inputs
+swagger: "2.0"

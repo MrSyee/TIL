@@ -1,0 +1,19 @@
+info:
+  contact:
+    email: khsyee@gmail.com
+    name: Kyunghwan Kim
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: It returns true if the api server is alive.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API server's liveness
+          schema:
+            type: boolean
+      summary: Healthcheck
+swagger: "2.0"
