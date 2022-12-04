@@ -1,5 +1,6 @@
-# Golang echo: Api gateway pattern
-[Reference](https://microservices.io/patterns/apigateway.html)
+# Golang echo: API gateway pattern
+[API Gateway pattern](https://microservices.io/patterns/apigateway.html)
+
 ![image](https://user-images.githubusercontent.com/17582508/205474383-b7aea97f-013e-404b-8a64-0aa29465c3b7.png)
 
 ## Run
