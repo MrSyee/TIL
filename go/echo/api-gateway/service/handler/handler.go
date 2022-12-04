@@ -1,4 +1,4 @@
-package controller
+package handler
 
 import (
 	"fmt"
@@ -10,23 +10,13 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-// API inputs, outputs
-type IntegersInput struct {
-	InputX int `json:"inputX" form:"inputX" xml:"inputX"`
-	InputY int `json:"inputY" form:"inputY" xml:"inputY"`
+// Handler
+type Handler struct {
 }
 
-type IntegerOutput struct {
-	Sum int `json:"sum" form:"sum" xml:"sum"`
-}
-
-// Controller
-type Controller struct {
-}
-
-func NewController() Controller {
-	controller := Controller{}
-	return controller
+func NewHandler() Handler {
+	handler := Handler{}
+	return handler
 }
 
 // @Summary     Sum integer inputs
@@ -37,12 +27,12 @@ func NewController() Controller {
 // @Param       inputY  formData  integer  true  "inputY"
 // @Success     200 {object} integer "Integer response: int"
 // @Router      /sum [post]
-func (controller Controller) Sum(c echo.Context, url string) error {
+func (handler Handler) Sum(c echo.Context, url string) error {
 	// Create client
 	client := client.NewArithmeticClient(url)
 
 	// Input
-	inputs := new(IntegersInput)
+	inputs := new(sumRequest)
 	if err := c.Bind(inputs); err != nil {
 		log.Error(err.Error())
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
@@ -55,5 +45,5 @@ func (controller Controller) Sum(c echo.Context, url string) error {
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
 	}
 
-	return fmt.Errorf("%w", c.JSON(http.StatusOK, IntegerOutput{Sum: sum}))
+	return fmt.Errorf("%w", c.JSON(http.StatusOK, sumRespons{Sum: sum}))
 }

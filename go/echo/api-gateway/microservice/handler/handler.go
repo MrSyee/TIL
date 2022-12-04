@@ -1,4 +1,4 @@
-package task
+package handler
 
 import (
 	"fmt"
@@ -8,16 +8,14 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-type (
-	IntegersInput struct {
-		InputX int `json:"inputX" form:"inputX" xml:"inputX"`
-		InputY int `json:"inputY" form:"inputY" xml:"inputY"`
-	}
+// Handler
+type Handler struct {
+}
 
-	IntegerOutput struct {
-		Sum int `json:"sum" form:"sum" xml:"sum"`
-	}
-)
+func NewHandler() Handler {
+	handler := Handler{}
+	return handler
+}
 
 // @Summary     Sum integer inputs
 // @Description It outputs sum of two inputs
@@ -27,9 +25,9 @@ type (
 // @Param       inputY  formData  integer  true  "inputY"
 // @Success     200 {object} integer "Integer response: int"
 // @Router      /sum [post]
-func Sum(c echo.Context) error {
+func (handler Handler) Sum(c echo.Context) error {
 	log.Info("[POST] Sum")
-	inputs := new(IntegersInput)
+	inputs := new(sumRequest)
 	if err := c.Bind(inputs); err != nil {
 		log.Error(err.Error())
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
@@ -37,11 +35,8 @@ func Sum(c echo.Context) error {
 	log.Info("Inputs ", *inputs)
 
 	// Business logic
-	response := IntegerOutput{Sum: (inputs.InputX + inputs.InputY)}
+	sumOutput := sum(inputs.InputX, inputs.InputY)
+	response := sumResponse{Sum: sumOutput}
 	log.Info("Run Sum logic ", response)
 	return fmt.Errorf("%w", c.JSON(http.StatusOK, response))
 }
-
-// func Multiply(x int, y int) error {
-// 	return x * y
-// }

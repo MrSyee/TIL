@@ -8,17 +8,6 @@ import (
 	"github.com/labstack/gommon/log"
 )
 
-// Request input type
-type IntegersInput struct {
-	InputX int `json:"inputX"`
-	InputY int `json:"inputY"`
-}
-
-// Request output type
-type IntegerOutput struct {
-	Sum int `json:"sum"`
-}
-
 // Define client
 type ArithmeticClient struct {
 	url string
@@ -33,13 +22,14 @@ func (client ArithmeticClient) SumRequest(x int, y int) (int, error) {
 	log.Info("SumRequest")
 	var err error
 	var sum int
+
 	// Preprocess
-	reqInput := IntegersInput{
+	sumReq := sumRequest{
 		InputX: x,
 		InputY: y,
 	}
-	log.Info("Sum Request Input: ", reqInput)
-	reqBytes, err := json.Marshal(reqInput)
+	log.Info("Sum Request Input: ", sumReq)
+	reqBytes, err := json.Marshal(sumReq)
 	if err != nil {
 		log.Fatalf("Error processing Input to Json: %v", err)
 		return sum, err
@@ -58,15 +48,15 @@ func (client ArithmeticClient) SumRequest(x int, y int) (int, error) {
 	}
 
 	// Postprocess
-	// Response.Body is io.ReadCloser
+	// Response.Body: io.ReadCloser
 	defer resp.Body.Close()
-	var output IntegerOutput
-	err = json.NewDecoder(resp.Body).Decode(&output)
+	var sumResp sumResponse
+	err = json.NewDecoder(resp.Body).Decode(&sumResp)
 	if err != err {
 		log.Fatalf("Error Post Response: %v", err)
 		return sum, err
 	}
 
-	log.Info("Response is ", output)
-	return output.Sum, err
+	log.Info("Response is ", sumResp)
+	return sumResp.Sum, err
 }

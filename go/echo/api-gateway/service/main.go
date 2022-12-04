@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"service/controller"
 
 	_ "service/docs"
+	"service/handler"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -36,7 +36,7 @@ func main() {
 
 	// Create a server with echo.
 	e := echo.New()
-	cont := controller.NewController()
+	h := handler.NewHandler()
 
 	// Logger
 	e.Use(middleware.Logger())
@@ -44,7 +44,7 @@ func main() {
 	// APIs
 	e.GET("/", getHealthCheck)
 	e.POST("/sum", func(c echo.Context) error {
-		return cont.Sum(c, flags.SumURL)
+		return h.Sum(c, flags.SumURL)
 	},
 	)
 

@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"microservice/task"
 	"net/http"
 
 	_ "microservice/docs"
+	"microservice/handler"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -34,14 +34,14 @@ func main() {
 
 	// Create a server with echo.
 	e := echo.New()
+	h := handler.NewHandler()
 
 	// Logger
 	e.Use(middleware.Logger())
 
 	// APIs
 	e.GET("/", getHealthCheck)
-	e.POST("/sum", task.Sum)
-	// e.Get("/multiply", task.Multiply())
+	e.POST("/sum", h.Sum)
 
 	// Swagger
 	e.GET("/docs/*", echoSwagger.WrapHandler)
