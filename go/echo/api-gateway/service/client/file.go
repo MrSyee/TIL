@@ -27,22 +27,24 @@ func (client FileClient) FileRequest(file *multipart.FileHeader) (bool, error) {
 	// Preprocess
 	f, err := file.Open()
 	if err != nil {
-		log.Fatalf("failed to get file content from form file: %v", err)
+		log.Errorf("failed to get file content from form file: %v", err)
+		return false, err
 	}
 	defer f.Close()
-	imgByte, err := io.ReadAll(f)
-	if err != nil {
-		log.Fatalf("failed to get raw input from file content: %v", err)
-	}
 
-	body := bytes.NewBuffer(imgByte)
-	resp, err := http.Post(
-		client.url,
-		"multipart/form-data",
-		body,
-	)
+	buf := &bytes.Buffer{}
+	mWriter := multipart.NewWriter(buf)
+	fWriter, _ := mWriter.CreateFormFile("file", "sample.jpg")
+	io.Copy(fWriter, f)
+	mWriter.Close()
+
+	req, _ := http.NewRequest("POST", client.url, buf)
+	req.Header.Add("Content-Type", mWriter.FormDataContentType())
+	httpClient := &http.Client{}
+	resp, err := httpClient.Do(req)
 	if err != nil {
-		log.Fatalf("%v", err)
+		log.Errorf("failed to request: %v", err)
+		return false, err
 	}
 
 	// Postprocess
@@ -51,10 +53,10 @@ func (client FileClient) FileRequest(file *multipart.FileHeader) (bool, error) {
 	var fileResp fileResponse
 	err = json.NewDecoder(resp.Body).Decode(&fileResp)
 	if err != err {
-		log.Fatalf("Error Post Response: %v", err)
+		log.Errorf("Error Post Response: %v", err)
 		return false, err
 	}
 
-	log.Info("Response is ", resp)
+	log.Info("Response is ", fileResp.Success)
 	return fileResp.Success, err
 }
