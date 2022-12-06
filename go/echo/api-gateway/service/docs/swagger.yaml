@@ -19,9 +19,14 @@ paths:
   /file:
     post:
       consumes:
-      - application/x-www-form-urlencoded
+      - application/json
       description: Send file
       parameters:
+      - description: filename
+        in: query
+        name: filename
+        required: true
+        type: string
       - description: file
         in: formData
         name: file

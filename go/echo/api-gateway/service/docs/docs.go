@@ -43,13 +43,20 @@ const docTemplate = `{
             "post": {
                 "description": "Send file",
                 "consumes": [
-                    "application/x-www-form-urlencoded"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
                 "summary": "Send file",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "filename",
+                        "name": "filename",
+                        "in": "query",
+                        "required": true
+                    },
                     {
                         "type": "file",
                         "description": "file",

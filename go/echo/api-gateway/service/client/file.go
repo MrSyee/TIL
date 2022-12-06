@@ -20,7 +20,7 @@ func NewFileClient(url string) FileClient {
 	return client
 }
 
-func (client FileClient) FileRequest(file *multipart.FileHeader) (bool, error) {
+func (client FileClient) FileRequest(file *multipart.FileHeader, queryParams map[string]string) (bool, error) {
 	log.Info("FileRequest")
 	var err error
 
@@ -35,11 +35,17 @@ func (client FileClient) FileRequest(file *multipart.FileHeader) (bool, error) {
 	buf := &bytes.Buffer{}
 	mWriter := multipart.NewWriter(buf)
 	fWriter, _ := mWriter.CreateFormFile("file", "sample.jpg")
-	io.Copy(fWriter, f)
+	_, _ = io.Copy(fWriter, f)
 	mWriter.Close()
 
 	req, _ := http.NewRequest("POST", client.url, buf)
 	req.Header.Add("Content-Type", mWriter.FormDataContentType())
+	q := req.URL.Query()
+	for key, val := range queryParams {
+		q.Add(key, val)
+	}
+	req.URL.RawQuery = q.Encode()
+
 	httpClient := &http.Client{}
 	resp, err := httpClient.Do(req)
 	if err != nil {
