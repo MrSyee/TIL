@@ -42,6 +42,7 @@ func main() {
 	// APIs
 	e.GET("/", getHealthCheck)
 	e.POST("/sum", h.Sum)
+	e.POST("/file", h.ReceiveFile)
 
 	// Swagger
 	e.GET("/docs/*", echoSwagger.WrapHandler)

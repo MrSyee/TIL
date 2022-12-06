@@ -16,14 +16,16 @@ import (
 
 // Flags contains the information to send requests to Triton inference server.
 type Flags struct {
-	PORT   string
-	SumURL string
+	PORT    string
+	SumURL  string
+	FileURL string
 }
 
 func parseFlags() Flags {
 	var flags = Flags{}
 	flag.StringVar(&flags.PORT, "p", "10000", "Service Port. Default: 10000")
-	flag.StringVar(&flags.SumURL, "u", "http://localhost:20000/sum", "Target URL")
+	flag.StringVar(&flags.SumURL, "s", "http://localhost:20000/sum", "Sum URL")
+	flag.StringVar(&flags.FileURL, "f", "http://localhost:20000/file", "File URL")
 	return flags
 }
 
@@ -43,9 +45,15 @@ func main() {
 
 	// APIs
 	e.GET("/", getHealthCheck)
-	e.POST("/sum", func(c echo.Context) error {
-		return h.Sum(c, flags.SumURL)
-	},
+	e.POST(
+		"/sum", func(c echo.Context) error {
+			return h.Sum(c, flags.SumURL)
+		},
+	)
+	e.POST(
+		"/file", func(c echo.Context) error {
+			return h.File(c, flags.FileURL)
+		},
 	)
 
 	// Swagger

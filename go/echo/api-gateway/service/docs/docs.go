@@ -39,6 +39,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/file": {
+            "post": {
+                "description": "Send file",
+                "consumes": [
+                    "application/x-www-form-urlencoded"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Send file",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
         "/sum": {
             "post": {
                 "description": "It outputs sum of two inputs",

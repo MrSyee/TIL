@@ -16,6 +16,25 @@ paths:
           schema:
             type: boolean
       summary: Healthcheck
+  /file:
+    post:
+      consumes:
+      - application/x-www-form-urlencoded
+      description: Receive file
+      parameters:
+      - description: input
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: boolean
+      summary: Receive file
   /sum:
     post:
       consumes:

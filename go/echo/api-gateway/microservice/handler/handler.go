@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -38,5 +39,29 @@ func (handler Handler) Sum(c echo.Context) error {
 	sumOutput := sum(inputs.InputX, inputs.InputY)
 	response := sumResponse{Sum: sumOutput}
 	log.Info("Run Sum logic ", response)
+	return fmt.Errorf("%w", c.JSON(http.StatusOK, response))
+}
+
+// @Summary     Receive file
+// @Description Receive file
+// @Accept      x-www-form-urlencoded
+// @Produce     json
+// @Param       file  formData  file  true  "input"
+// @Success     200 {object} boolean "Success"
+// @Router      /file [post]
+func (handler Handler) ReceiveFile(c echo.Context) error {
+	log.Info("[POST] ReceiveFile")
+	inputs := new(fileRequest)
+	inputs.File, _ = c.FormFile("file")
+	file := inputs.File
+	f, err := file.Open()
+	if err != nil {
+		log.Info("open ", file.Filename, "error: ", err.Error())
+		return fmt.Errorf("%w", err)
+	}
+	_, err = io.ReadAll(f)
+	log.Info("read file ", file.Filename, "error: ", err)
+
+	response := fileResponse{Success: true}
 	return fmt.Errorf("%w", c.JSON(http.StatusOK, response))
 }
