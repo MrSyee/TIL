@@ -43,7 +43,7 @@ const docTemplate = `{
             "post": {
                 "description": "Receive file",
                 "consumes": [
-                    "application/x-www-form-urlencoded"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -51,8 +51,15 @@ const docTemplate = `{
                 "summary": "Receive file",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "filename",
+                        "name": "filename",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
                         "type": "file",
-                        "description": "input",
+                        "description": "file",
                         "name": "file",
                         "in": "formData",
                         "required": true

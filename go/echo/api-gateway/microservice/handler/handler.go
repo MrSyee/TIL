@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -44,15 +45,21 @@ func (handler Handler) Sum(c echo.Context) error {
 
 // @Summary     Receive file
 // @Description Receive file
-// @Accept      x-www-form-urlencoded
+// @Accept      json
 // @Produce     json
-// @Param       file formData file    true "input"
-// @Success     200  {object} boolean "Success"
+// @Param       filename query    string  true "filename"
+// @Param       file     formData file    true "file"
+// @Success     200      {object} boolean "Success"
 // @Router      /file [post]
 func (handler Handler) ReceiveFile(c echo.Context) error {
 	log.Info("[POST] ReceiveFile")
 	inputs := new(fileRequest)
+	inputs.FileName = c.QueryParam("filename")
 	inputs.File, _ = c.FormFile("file")
+
+	jsonInputs, _ := json.Marshal(inputs)
+	log.Info("Input is ", string(jsonInputs))
+
 	file := inputs.File
 	f, err := file.Open()
 	if err != nil {

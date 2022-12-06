@@ -12,7 +12,8 @@ type sumResponse struct {
 }
 
 type fileRequest struct {
-	File *multipart.FileHeader `json:"file" form:"file" xml:"file"`
+	FileName string                `json:"filename" form:"filename" xml:"filename"`
+	File     *multipart.FileHeader `json:"file" form:"file" xml:"file"`
 }
 
 type fileResponse struct {

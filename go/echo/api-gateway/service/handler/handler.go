@@ -45,25 +45,37 @@ func (handler Handler) Sum(c echo.Context, url string) error {
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
 	}
 
-	return fmt.Errorf("%w", c.JSON(http.StatusOK, sumRespons{Sum: sum}))
+	return fmt.Errorf("%w", c.JSON(http.StatusOK, sumResponse{Sum: sum}))
 }
 
 // @Summary     Send file
 // @Description Send file
-// @Accept      x-www-form-urlencoded
+// @Accept      json
 // @Produce     json
-// @Param       file formData file    true "file"
-// @Success     200  {object} boolean "Success"
+// @Param       filename query    string  true "filename"
+// @Param       file     formData file    true "file"
+// @Success     200      {object} boolean "Success"
 // @Router      /file [post]
 func (handler Handler) File(c echo.Context, url string) error {
 	// Create client
 	client := client.NewFileClient(url)
 
+	inputs := new(sumRequest)
+	if err := c.Bind(inputs); err != nil {
+		log.Error(err.Error())
+		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
+	}
+	log.Info(inputs)
+
 	// Input
 	file, _ := c.FormFile("file")
+	fileName := c.QueryParam("filename")
 	// Request to microservice
 	// client code
-	output, err := client.FileRequest(file)
+	queryParams := map[string]string{
+		"filename": fileName,
+	}
+	output, err := client.FileRequest(file, queryParams)
 	if err != nil {
 		log.Error(err.Error())
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
