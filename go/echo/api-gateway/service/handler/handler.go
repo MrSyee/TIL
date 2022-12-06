@@ -45,7 +45,7 @@ func (handler Handler) Sum(c echo.Context, url string) error {
 		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
 	}
 
-	return fmt.Errorf("%w", c.JSON(http.StatusOK, sumRespons{Sum: sum}))
+	return fmt.Errorf("%w", c.JSON(http.StatusOK, sumResponse{Sum: sum}))
 }
 
 // @Summary     Send file
@@ -59,6 +59,13 @@ func (handler Handler) Sum(c echo.Context, url string) error {
 func (handler Handler) File(c echo.Context, url string) error {
 	// Create client
 	client := client.NewFileClient(url)
+
+	inputs := new(sumRequest)
+	if err := c.Bind(inputs); err != nil {
+		log.Error(err.Error())
+		return fmt.Errorf("%w", c.String(http.StatusBadRequest, "Bad request "+err.Error()))
+	}
+	log.Info(inputs)
 
 	// Input
 	file, _ := c.FormFile("file")

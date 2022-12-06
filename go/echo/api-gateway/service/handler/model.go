@@ -6,6 +6,6 @@ type sumRequest struct {
 	InputY int `json:"inputY" form:"inputY" xml:"inputY"`
 }
 
-type sumRespons struct {
+type sumResponse struct {
 	Sum int `json:"sum" form:"sum" xml:"sum"`
 }
