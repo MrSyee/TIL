@@ -22,9 +22,9 @@ func NewHandler() Handler {
 // @Description It outputs sum of two inputs
 // @Accept      x-www-form-urlencoded
 // @Produce     json
-// @Param       inputX  formData  integer  true  "inputX"
-// @Param       inputY  formData  integer  true  "inputY"
-// @Success     200 {object} integer "Integer response: int"
+// @Param       inputX formData integer true "inputX"
+// @Param       inputY formData integer true "inputY"
+// @Success     200    {object} integer "Integer response: int"
 // @Router      /sum [post]
 func (handler Handler) Sum(c echo.Context) error {
 	log.Info("[POST] Sum")
@@ -46,8 +46,8 @@ func (handler Handler) Sum(c echo.Context) error {
 // @Description Receive file
 // @Accept      x-www-form-urlencoded
 // @Produce     json
-// @Param       file  formData  file  true  "input"
-// @Success     200 {object} boolean "Success"
+// @Param       file formData file    true "input"
+// @Success     200  {object} boolean "Success"
 // @Router      /file [post]
 func (handler Handler) ReceiveFile(c echo.Context) error {
 	log.Info("[POST] ReceiveFile")
