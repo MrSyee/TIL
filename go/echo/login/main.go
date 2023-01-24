@@ -10,6 +10,8 @@ import (
 	"github.com/labstack/echo-contrib/pprof"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
+	"echo-login/src/api"
 )
 
 // Flags contains the information to send requests to Triton inference server.
@@ -52,7 +54,7 @@ func main() {
 
 	// Skip JWT validation.
 	e.GET("/", healthcheck)
-	// e.POST("/login", api.Login)
+	e.POST("/login", api.Login)
 	// e.POST("/refresh-token", api.RefreshToken)
 
 	// Accessible with JWT validation.

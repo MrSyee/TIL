@@ -1,0 +1,4 @@
+p, Administrator, /*, *
+
+p, User, /users/me, GET
+p, User, /logout, POST
