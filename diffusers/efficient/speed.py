@@ -15,6 +15,12 @@ Experiments
     - float16: 8.53
     - float32 + DPMSolverMultistepScheduler: 10.14
     - float16 + DPMSolverMultistepScheduler: 3.45
+
+- Machine: Ampere A40 (torch 1.13.1)
+    - float32: 36.23
+    - float16: 4.86
+    - float32 + DPMSolverMultistepScheduler: 2.73
+    - float16 + DPMSolverMultistepScheduler: 1.50
 """
 
 import os
