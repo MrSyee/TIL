@@ -10,5 +10,10 @@ Archive what I learned today.
 ### DALI
 - [quick-start](dali/quick-start/)
 
+### diffusers
+- [quick-start](diffusers/quick-start/)
+- [efficient](diffusers/efficient/)
+- [controlnet](diffusers/controlnet/)
+
 ### Knative
 - [quick-start](knative/quick-start/)
