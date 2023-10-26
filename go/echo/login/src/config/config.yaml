@@ -1,0 +1,5 @@
+AccessTokenExpire: 30
+RefreshTokenExpire: 360
+RefreshCookieName: "refreshcookie"
+SecretKey: "mmW&x%$ecreTKEy"
+RedisServer: "localhost:6379"
