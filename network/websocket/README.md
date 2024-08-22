@@ -28,3 +28,25 @@
   - 서버가 요청을 받으면 요청에 대한 응답을 완료하지 않은 상태에서 데이터를 계속 보내도록 한다.
   - 클라이언트는 응답을 받더라도 연결이 끊어지지 않는다.
   - 클라이언트에서 서버로 데이터를 보낼 수 없다. 실시간 단방향 통신이다.
+
+
+## 실습
+다운로드 받을 때, 다운로드가 얼마나 되었는지 정도를 Websocket으로 Client에게 알려주는 로직
+
+- server
+```
+make run
+```
+
+- client
+```
+python client.py
+```
+```
+Download started with task ID: 7310ab4b-236d-44fd-84fe-a80ea4040208
+Download progress: 0%
+Download progress: 1.0668628656986767%
+...
+Download completed
+Download process completed.
+```
