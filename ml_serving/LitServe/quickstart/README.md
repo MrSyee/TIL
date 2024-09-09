@@ -1,4 +1,9 @@
-# LitServe
+# LitServe - quickstart
+
+## Setup
+```
+pip install -r requirements.txt
+```
 
 ## Run
 ### Quickstart
@@ -21,6 +26,11 @@ Response:
  {"output":{"output":80.0}}
 
 ```
+
+
+#### Result
+- Docs: http://localhost:8000/docs
+<img width="1491" alt="image" src="https://github.com/user-attachments/assets/1dad0d9c-1683-4e1d-aa98-eb6cca0c3fc1">
 
 
 ## Reference

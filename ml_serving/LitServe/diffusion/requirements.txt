@@ -1,0 +1,11 @@
+torch==2.0.1
+torchvision==0.15.2
+torchaudio==2.0.2
+numpy==1.26.4
+diffusers==0.29.1
+transformers==4.35.2
+accelerate==0.34.2
+
+litserve==0.2.2
+uvloop==0.20.0
+requests==2.32.3
