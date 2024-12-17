@@ -1,0 +1,16 @@
+torch==2.5.0
+numpy==1.26.4
+protobuf==5.27.3
+sentencepiece==0.2.0
+transformers==4.46.2
+accelerate==0.33.0
+peft==0.13.2
+diffusers==0.31.0
+bitsandbytes==0.44.1
+optimum==1.23.3
+optimum-quanto==0.2.6
+
+# flux-controlnet
+huggingface_hub==0.24.6
+
+litserve==0.2.4
