@@ -1,0 +1,18 @@
+[project]
+name = "langgraph-TIL"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain[openai]>=0.3.25",
+    "langgraph>=0.4.3",
+    "pillow>=11.2.1",
+    "python-dotenv>=1.1.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+]
