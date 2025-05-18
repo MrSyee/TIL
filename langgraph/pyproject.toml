@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "langchain-tavily>=0.1.6",
     "langchain[openai]>=0.3.25",
     "langgraph>=0.4.3",
     "pillow>=11.2.1",
@@ -13,6 +14,5 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
-    "isort>=6.0.1",
+    "ruff>=0.11.10",
 ]
