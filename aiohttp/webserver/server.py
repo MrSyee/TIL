@@ -17,6 +17,8 @@ class WebServer:
         self.app.add_routes(routes)
 
     async def run(self):
+        print(f"Starting server on {self.host}:{self.port}")
+
         runner = web.AppRunner(self.app)
         await runner.setup()
         site = web.TCPSite(runner, self.host, self.port)
@@ -24,9 +26,15 @@ class WebServer:
 
         print(f"Server is running on {self.host}:{self.port}")
 
+async def publish_loop():
+    import time
+    while True:
+        print("Publishing message")
+        time.sleep(1)
+
 
 async def run(server: WebServer):
-    await asyncio.gather(server.run())
+    await asyncio.gather(server.run(), publish_loop())
 
 
 if __name__ == "__main__":
@@ -35,4 +43,8 @@ if __name__ == "__main__":
 
     server = WebServer(host="0.0.0.0", port=8999)
 
-    asyncio_loop.run_until_complete(run(server))
+    try:
+        asyncio_loop.run_until_complete(run(server))
+
+    except KeyboardInterrupt:
+        print("Server is shutting down...")
