@@ -1,20 +1,26 @@
 from google.api_core.client_options import ClientOptions
 from google.cloud import documentai_v1
+from pdf_controller import find_keyword_positions, add_bounding_box_to_pdf, print_text_positions
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # TODO(developer): Create a processor of type "OCR_PROCESSOR".
 
 # TODO(developer): Update and uncomment these variables before running the sample.
-project_id = "MY_PROJECT_ID"
+project_id = "doc-ocr-465304"
 
 # Processor ID as hexadecimal characters.
 # Not to be confused with the Processor Display Name.
-processor_id = "doc-ocr-465304"
+processor_id = "15e8648047a4a370"
 
 # Processor location. For example: "us" or "eu".
-location = "MY_PROCESSOR_LOCATION"
+location = "us"
 
 # Path for file to process.
-file_path = "/path/to/local/pdf"
+file_path = "assets/test_answer-2.pdf"
 
 # Set `api_endpoint` if you use a location other than "us".
 opts = ClientOptions(api_endpoint=f"{location}-documentai.googleapis.com")
@@ -54,3 +60,20 @@ document = result.document
 # https://cloud.google.com/document-ai/docs/reference/rest/v1/Document
 print("The document contains the following text:")
 print(document.text)
+
+# Save the text to a file
+with open("outputs/output.txt", "w") as f:
+    f.write(document.text)
+
+
+search_text = "성과관리"
+positions = find_keyword_positions(document, search_text)
+
+# 찾은 텍스트 위치 정보 출력
+print_text_positions(positions)
+
+# 바운딩 박스 추가
+if positions:
+    add_bounding_box_to_pdf("assets/test_answer-2.pdf", "outputs/check_result.pdf", positions)
+else:
+    print(f"'{search_text}' 텍스트를 찾을 수 없습니다.")
