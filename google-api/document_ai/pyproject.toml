@@ -1,0 +1,10 @@
+[project]
+name = "document-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "gcloud>=0.18.3",
+    "google-cloud-documentai>=3.5.0",
+]
