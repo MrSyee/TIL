@@ -10,6 +10,7 @@ import io
 def find_keyword_positions(document, keyword):
     positions = []
     checked_ranges = set()  # (start_index, end_index) 튜플 저장
+    keyword_nospace = keyword.replace(' ', '')
     for page_idx, page in enumerate(document.pages):
         tokens = page.tokens
         token_texts = []
@@ -20,12 +21,13 @@ def find_keyword_positions(document, keyword):
             token_texts.append((document.text[start:end], token, start, end))
             print(f"[DEBUG] token_texts: {document.text[start:end]}")
         for i in range(len(token_texts)):
-            for j in range(i, min(i + len(keyword), len(token_texts))):
+            for j in range(i, min(i + len(keyword_nospace) + 2, len(token_texts))):
                 combined_text = ''.join([t[0] for t in token_texts[i:j+1]])
+                combined_text_nospace = combined_text.replace(' ', '')
                 start_idx = token_texts[i][2]
                 end_idx = token_texts[j][3]
-                # 조합 텍스트가 keyword와 정확히 일치할 때만 처리
-                if combined_text == keyword and (start_idx, end_idx) not in checked_ranges:
+                # 공백 제거 후 텍스트가 keyword와 정확히 일치할 때만 처리
+                if combined_text_nospace == keyword_nospace and (start_idx, end_idx) not in checked_ranges:
                     print(f"[DEBUG] 페이지 {page_idx+1}, 조합 텍스트: {combined_text}")
                     checked_ranges.add((start_idx, end_idx))
                     # 키워드가 포함된 모든 토큰의 바운딩 박스를 합쳐서 전체 범위 계산
