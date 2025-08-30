@@ -3,7 +3,7 @@ import os
 
 from google.api_core.client_options import ClientOptions
 from google.cloud import documentai_v1
-from pdf_controller import find_keyword_positions, add_bounding_box_to_pdf, print_text_positions
+from pdf_controller import find_keyword_positions, add_bounding_box_to_pdf, print_text_positions, visualize_blocks_and_paragraphs, extract_and_save_text_by_units
 
 from dotenv import load_dotenv
 
@@ -77,8 +77,28 @@ def main():
         f.write(document.text)
 
 
+    print(f"[DEBUG] document.pages: {len(document.pages)}")
+    print(f"[DEBUG] document.pages[0].tokens: {len(document.pages[0].tokens)}")
+    print(f"[DEBUG] document.pages[0].tokens[0]: {document.pages[0].tokens[0]}")
+    print(f"[DEBUG] document.pages[0].lines: {len(document.pages[0].lines)}")
+    print(f"[DEBUG] document.pages[0].lines[0].: {document.pages[0].lines[0].__dict__['_pb'].layout}")
+    print(f"[DEBUG] document.pages[0].paragraphs: {len(document.pages[0].paragraphs)}")
+    print(f"[DEBUG] document.pages[0].blocks: {len(document.pages[0].blocks)}")
+
+    # Block과 Paragraph 텍스트 추출 및 저장
+    # print("\n=== Block과 Paragraph 텍스트 추출 ===")
+    # block_texts, paragraph_texts = extract_and_save_text_by_units(document)
+    
+    # # Block과 Paragraph 영역을 시각화한 PDF 생성
+    # print("\n=== Block과 Paragraph 영역 시각화 ===")
+    # visualization_pdf_path = "outputs/blocks_and_paragraphs_visualization.pdf"
+    # visualize_blocks_and_paragraphs(file_path, visualization_pdf_path, document)
+    # print(f"시각화 PDF가 저장되었습니다: {visualization_pdf_path}")
+
     search_text = args.keyword
     positions = find_keyword_positions(document, search_text)
+    # positions = find_keyword_positions_by_blocks(document, search_text)
+    # positions = find_keyword_positions_by_paragraphs(document, search_text)
 
     # 찾은 텍스트 위치 정보 출력
     print_text_positions(positions)
